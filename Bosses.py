@@ -115,6 +115,22 @@ def TrinexxDefeatRule(state, player: int):
 def AgahnimDefeatRule(state, player: int):
     return state.has_sword(player) or state.has('Hammer', player) or state.has('Bug Catching Net', player)
 
+def GanonDefeatRuleGenerator(player: int, silverless = False, swordless = False):
+    if swordless:
+        return lambda state: state.has('Hammer', player) and \
+                             state.has_fire_source(player) and \
+                             state.has('Silver Bow', player) and \
+                             state.can_shoot_arrows(player)
+    common = lambda state: state.has_beam_sword(player) and state.has_fire_source(player)
+
+    if silverless: # silverless ganon may be needed in minor glitches
+        return lambda state: common and state.has('Tempered Sword', player) or state.has('Golden Sword', player) or (
+                state.has('Silver Bow', player) and state.can_shoot_arrows(player)) or \
+               state.has('Lamp', player) or state.can_extend_magic(player, 12)
+                # need to light torch a sufficient amount of times
+    else:
+        return lambda state: common and state.has('Silver Bow', player) and state.can_shoot_arrows(player)
+
 
 boss_table = {
     'Armos Knights': ('Armos', ArmosKnightsDefeatRule),
