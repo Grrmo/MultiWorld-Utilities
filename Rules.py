@@ -193,7 +193,7 @@ def global_rules(world, player):
     set_rule(world.get_location('Dark Blacksmith Ruins', player), lambda state: state.has('Return Smith', player))
     set_rule(world.get_location('Purple Chest', player),
              lambda state: state.has('Pick Up Purple Chest', player))  # Can S&Q with chest
-    set_rule(world.get_location('Ether Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has_beam_sword(player))
+    set_rule(world.get_location('Ether Tablet', player), lambda state: state.can_retrieve_tablet(player))
     set_rule(world.get_location('Master Sword Pedestal', player), lambda state: state.has('Red Pendant', player) and state.has('Blue Pendant', player) and state.has('Green Pendant', player))
 
     set_rule(world.get_location('Missing Smith', player), lambda state: state.has('Get Frog', player) and state.can_reach('Blacksmiths Hut', 'Region', player)) # Can't S&Q with smith
@@ -477,7 +477,7 @@ def default_rules(world, player):
     set_rule(world.get_entrance('Hyrule Castle Ledge Mirror Spot', player), lambda state: state.has_Mirror(player))
     set_rule(world.get_entrance('Hyrule Castle Main Gate', player), lambda state: state.has_Mirror(player))
     set_rule(world.get_entrance('Dark Lake Hylia Drop (East)', player), lambda state: (state.has_Pearl(player) and state.has('Flippers', player) or state.has_Mirror(player)))  # Overworld Bunny Revival
-    set_rule(world.get_location('Bombos Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has_beam_sword(player))
+    set_rule(world.get_location('Bombos Tablet', player), lambda state: state.can_retrieve_tablet(player))
     set_rule(world.get_entrance('Dark Lake Hylia Drop (South)', player), lambda state: state.has_Pearl(player) and state.has('Flippers', player))  # ToDo any fake flipper set up?
     set_rule(world.get_entrance('Dark Lake Hylia Ledge Fairy', player), lambda state: state.has_Pearl(player)) # bomb required
     set_rule(world.get_entrance('Dark Lake Hylia Ledge Spike Cave', player), lambda state: state.can_lift_rocks(player) and state.has_Pearl(player))
@@ -611,7 +611,7 @@ def inverted_rules(world, player):
     set_rule(world.get_entrance('Bonk Fairy (Dark)', player), lambda state: state.has_Boots(player))
     set_rule(world.get_entrance('West Dark World Gap', player), lambda state: state.has('Hookshot', player))
     set_rule(world.get_entrance('Dark Lake Hylia Drop (East)', player), lambda state: state.has('Flippers', player))
-    set_rule(world.get_location('Bombos Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has_beam_sword(player))
+    set_rule(world.get_location('Bombos Tablet', player), lambda state: state.can_retrieve_tablet(player))
     set_rule(world.get_entrance('Dark Lake Hylia Drop (South)', player), lambda state: state.has('Flippers', player))  # ToDo any fake flipper set up?
     set_rule(world.get_entrance('Dark Lake Hylia Ledge Pier', player), lambda state: state.has('Flippers', player))
     set_rule(world.get_entrance('Dark Lake Hylia Ledge Spike Cave', player), lambda state: state.can_lift_rocks(player))
@@ -815,7 +815,6 @@ def open_rules(world, player):
 
 def swordless_rules(world, player):
     set_rule(world.get_entrance('Agahnim 1', player), lambda state: (state.has('Hammer', player) or state.has('Fire Rod', player) or state.can_shoot_arrows(player) or state.has('Cane of Somaria', player)) and state.has_key('Small Key (Agahnims Tower)', player, 2))
-    set_rule(world.get_location('Ether Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has('Hammer', player))
     set_rule(world.get_entrance('Skull Woods Torch Room', player), lambda state: state.has_key('Small Key (Skull Woods)', player, 3) and state.has('Fire Rod', player))  # no curtain
     set_rule(world.get_entrance('Ice Palace Entrance Room', player), lambda state: state.has('Fire Rod', player) or state.has('Bombos', player)) #in swordless mode bombos pads are present in the relevant parts of ice palace
     set_rule(world.get_entrance('Ganon Drop', player), lambda state: state.has('Hammer', player))  # need to damage ganon to get tiles to drop
@@ -824,12 +823,10 @@ def swordless_rules(world, player):
         set_rule(world.get_entrance('Agahnims Tower', player), lambda state: state.has('Cape', player) or state.has('Hammer', player) or state.has('Beat Agahnim 1', player))  # barrier gets removed after killing agahnim, relevant for entrance shuffle
         set_rule(world.get_entrance('Turtle Rock', player), lambda state: state.has_Pearl(player) and state.has_turtle_rock_medallion(player) and state.can_reach('Turtle Rock (Top)', 'Region', player))   # sword not required to use medallion for opening in swordless (!)
         set_rule(world.get_entrance('Misery Mire', player), lambda state: state.has_Pearl(player) and state.has_misery_mire_medallion(player))  # sword not required to use medallion for opening in swordless (!)
-        set_rule(world.get_location('Bombos Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has('Hammer', player) and state.has_Mirror(player))
     else:
         # only need ddm access for aga tower in inverted
         set_rule(world.get_entrance('Turtle Rock', player), lambda state: state.has_turtle_rock_medallion(player) and state.can_reach('Turtle Rock (Top)', 'Region', player))   # sword not required to use medallion for opening in swordless (!)
         set_rule(world.get_entrance('Misery Mire', player), lambda state: state.has_misery_mire_medallion(player))  # sword not required to use medallion for opening in swordless (!)
-        set_rule(world.get_location('Bombos Tablet', player), lambda state: state.has('Book of Mudora', player) and state.has('Hammer', player))
 
 
 def add_connection(parent_name, target_name, entrance_name, world, player):
