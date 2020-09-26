@@ -275,6 +275,11 @@ def roll_settings(weights):
     ret.logic = {None: 'noglitches', 'none': 'noglitches', 'no_logic': 'nologic', 'overworld_glitches': 'owglitches',
                  'minor_glitches': 'minorglitches'}[
         glitches_required]
+
+    ret.dark_room_logic = get_choice("dark_room_logic", weights, "lamp")
+    if ret.dark_room_logic not in {"lamp", "sconces", "none"}:
+        raise ValueError(f"Unknown Dark Room Logic: \"{ret.dark_room_logic}\"")
+
     ret.progression_balancing = get_choice('progression_balancing', weights, True)
     # item_placement = get_choice('item_placement')
     # not supported in ER

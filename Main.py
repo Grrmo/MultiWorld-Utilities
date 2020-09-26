@@ -81,6 +81,7 @@ def main(args, seed=None):
     world.shop_shuffle = args.shop_shuffle.copy()
     world.progression_balancing = {player: not balance for player, balance in args.skip_progression_balancing.items()}
     world.shuffle_prizes = args.shuffle_prizes.copy()
+    world.dark_room_logic = args.dark_room_logic.copy()
 
     world.rom_seeds = {player: random.Random(world.random.randint(0, 999999999)) for player in range(1, world.players + 1)}
 
@@ -374,6 +375,8 @@ def copy_world(world):
     ret.beemizer = world.beemizer.copy()
     ret.timer = world.timer.copy()
     ret.shufflepots = world.shufflepots.copy()
+    ret.shuffle_prizes = world.shuffle_prizes.copy()
+    ret.dark_room_logic = world.dark_room_logic.copy()
 
     for player in range(1, world.players + 1):
         if world.mode[player] != 'inverted':

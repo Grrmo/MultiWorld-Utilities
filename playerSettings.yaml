@@ -25,6 +25,10 @@ glitches_required: # Determine the logic required to complete the seed
   overworld_glitches: 0 # Assumes the player has knowledge of both overworld major glitches (boots clips, mirror clips) and minor glitches (fake flipper, super bunny shenanigans, water walk and etc.)
   no_logic: 0 # Your own items are placed with no regard to any logic; such as your Fire Rod can be on your Trinexx.
   # Other players items are placed into your world under OWG logic
+dark_room_logic: # Logic for unlit dark rooms
+  lamp: 50 # require the Lamp for these rooms to be considered accessible.
+  sconces: 0 # in addition to lamp, allow the fire rod and presence of easily accessible sconces for access
+  none: 0 # all dark rooms are always considered doable, meaning this may force completion of rooms in complete darkness
 meta_ignore: # Nullify options specified in the meta.yaml file. Adding an option here guarantees it will not occur in your seed, even if the .yaml file specifies it
   mode:
     - inverted # Never play inverted seeds

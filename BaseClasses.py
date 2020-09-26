@@ -5,7 +5,7 @@ from enum import Enum, unique
 import logging
 import json
 from collections import OrderedDict, Counter, deque
-from typing import Union, Optional, List, Set
+from typing import Union, Optional, List, Set, Dict
 import secrets
 import random
 
@@ -20,6 +20,7 @@ class World(object):
     _region_cache: dict
     difficulty_requirements: dict
     required_medallions: dict
+    dark_room_logic: Dict[int, str]
 
     def __init__(self, players: int, shuffle, logic, mode, swords, difficulty, difficulty_adjustments, timer,
                  progressive,
@@ -125,6 +126,7 @@ class World(object):
             set_player_attr('triforce_pieces_required', 20)
             set_player_attr('shop_shuffle', 'off')
             set_player_attr('shuffle_prizes', "g")
+            set_player_attr('dark_room_logic', "lamp")
 
     def secure(self):
         self.random = secrets.SystemRandom()
@@ -1259,6 +1261,7 @@ class Spoiler(object):
         from Utils import __version__ as ERVersion
         self.metadata = {'version': ERVersion,
                          'logic': self.world.logic,
+                         'dark_room_logic': self.world.dark_room_logic,
                          'mode': self.world.mode,
                          'retro': self.world.retro,
                          'weapons': self.world.swords,
@@ -1335,6 +1338,7 @@ class Spoiler(object):
                         f"Hash - {self.world.player_names[player][team]} (Team {team + 1}): " if self.world.teams > 1 else 'Hash: ',
                         self.hashes[player, team]))
                 outfile.write('Logic:                           %s\n' % self.metadata['logic'][player])
+                outfile.write('Dark Room Logic:                 %s\n' % self.metadata['dark_room_logic'][player])
                 if self.world.players > 1:
                     outfile.write('Progression Balanced:            %s\n' % (
                         'Yes' if self.metadata['progression_balancing'][player] else 'No'))
