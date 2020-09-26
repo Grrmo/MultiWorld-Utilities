@@ -602,7 +602,6 @@ class CollectionState(object):
 
     def can_shoot_arrows(self, player: int) -> bool:
         if self.world.retro[player]:
-            # TODO: Progressive and Non-Progressive silvers work differently (progressive is not usable until the shop arrow is bought)
             return (self.has('Bow', player) or self.has('Silver Bow', player)) and self.can_buy('Single Arrow', player)
         return self.has('Bow', player) or self.has('Silver Bow', player)
 

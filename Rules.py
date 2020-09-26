@@ -236,13 +236,16 @@ def global_rules(world, player):
     set_rule(world.get_location('Eastern Palace - Big Chest', player),
              lambda state: state.has('Big Key (Eastern Palace)', player))
     set_rule(world.get_location('Eastern Palace - Boss', player),
-             lambda state: state.can_shoot_arrows(player) and state.has('Big Key (Eastern Palace)',
-                                                                        player) and state.world.get_location(
+             lambda state: state.has('Big Key (Eastern Palace)', player) and state.world.get_location(
                  'Eastern Palace - Boss', player).parent_region.dungeon.boss.can_defeat(state))
     set_rule(world.get_location('Eastern Palace - Prize', player),
-             lambda state: state.can_shoot_arrows(player) and state.has('Big Key (Eastern Palace)',
-                                                                        player) and state.world.get_location(
+             lambda state: state.has('Big Key (Eastern Palace)', player) and state.world.get_location(
                  'Eastern Palace - Prize', player).parent_region.dungeon.boss.can_defeat(state))
+    if not world.enemy_shuffle[player]:
+        add_rule(world.get_location('Eastern Palace - Boss', player),
+                 lambda state: state.can_shoot_arrows(player))
+        add_rule(world.get_location('Eastern Palace - Prize', player),
+                 lambda state: state.can_shoot_arrows(player))
 
     set_rule(world.get_location('Desert Palace - Big Chest', player), lambda state: state.has('Big Key (Desert Palace)', player))
     set_rule(world.get_location('Desert Palace - Torch', player), lambda state: state.has_Boots(player))
@@ -339,7 +342,8 @@ def global_rules(world, player):
     set_defeat_dungeon_boss_rule(world.get_location('Turtle Rock - Boss', player))
     set_defeat_dungeon_boss_rule(world.get_location('Turtle Rock - Prize', player))
 
-    set_rule(world.get_entrance('Palace of Darkness Bonk Wall', player), lambda state: state.can_shoot_arrows(player))
+    if not world.enemy_shuffle[player]:
+        set_rule(world.get_entrance('Palace of Darkness Bonk Wall', player), lambda state: state.can_shoot_arrows(player))
     set_rule(world.get_entrance('Palace of Darkness Hammer Peg Drop', player), lambda state: state.has('Hammer', player))
     set_rule(world.get_entrance('Palace of Darkness Bridge Room', player), lambda state: state.has_key('Small Key (Palace of Darkness)', player, 1))  # If we can reach any other small key door, we already have back door access to this area
     set_rule(world.get_entrance('Palace of Darkness Big Key Door', player), lambda state: state.has_key('Small Key (Palace of Darkness)', player, 6) and state.has('Big Key (Palace of Darkness)', player) and state.can_shoot_arrows(player) and state.has('Hammer', player))
@@ -388,15 +392,26 @@ def global_rules(world, player):
 
     set_rule(world.get_location('Ganons Tower - Big Chest', player), lambda state: state.has('Big Key (Ganons Tower)', player))
 
-    set_rule(world.get_location('Ganons Tower - Big Key Room - Left', player), lambda state: state.world.get_location('Ganons Tower - Big Key Room - Left', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
-    set_rule(world.get_location('Ganons Tower - Big Key Chest', player), lambda state: state.world.get_location('Ganons Tower - Big Key Chest', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
-    set_rule(world.get_location('Ganons Tower - Big Key Room - Right', player), lambda state: state.world.get_location('Ganons Tower - Big Key Room - Right', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
-
-    set_rule(world.get_entrance('Ganons Tower Big Key Door', player), lambda state: state.has('Big Key (Ganons Tower)', player) and state.can_shoot_arrows(player))
-    set_rule(world.get_entrance('Ganons Tower Torch Rooms', player), lambda state: state.has_fire_source(player) and state.world.get_entrance('Ganons Tower Torch Rooms', player).parent_region.dungeon.bosses['middle'].can_defeat(state))
-    set_rule(world.get_location('Ganons Tower - Pre-Moldorm Chest', player), lambda state: state.has_key('Small Key (Ganons Tower)', player, 3))
-    set_rule(world.get_entrance('Ganons Tower Moldorm Door', player), lambda state: state.has_key('Small Key (Ganons Tower)', player, 4))
-    set_rule(world.get_entrance('Ganons Tower Moldorm Gap', player), lambda state: state.has('Hookshot', player) and state.world.get_entrance('Ganons Tower Moldorm Gap', player).parent_region.dungeon.bosses['top'].can_defeat(state))
+    set_rule(world.get_location('Ganons Tower - Big Key Room - Left', player),
+             lambda state: state.world.get_location('Ganons Tower - Big Key Room - Left', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
+    set_rule(world.get_location('Ganons Tower - Big Key Chest', player),
+             lambda state: state.world.get_location('Ganons Tower - Big Key Chest', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
+    set_rule(world.get_location('Ganons Tower - Big Key Room - Right', player),
+             lambda state: state.world.get_location('Ganons Tower - Big Key Room - Right', player).parent_region.dungeon.bosses['bottom'].can_defeat(state))
+    if world.enemy_shuffle[player]:
+        set_rule(world.get_entrance('Ganons Tower Big Key Door', player),
+                 lambda state: state.has('Big Key (Ganons Tower)', player))
+    else:
+        set_rule(world.get_entrance('Ganons Tower Big Key Door', player),
+                 lambda state: state.has('Big Key (Ganons Tower)', player) and state.can_shoot_arrows(player))
+    set_rule(world.get_entrance('Ganons Tower Torch Rooms', player),
+             lambda state: state.has_fire_source(player) and state.world.get_entrance('Ganons Tower Torch Rooms', player).parent_region.dungeon.bosses['middle'].can_defeat(state))
+    set_rule(world.get_location('Ganons Tower - Pre-Moldorm Chest', player),
+             lambda state: state.has_key('Small Key (Ganons Tower)', player, 3))
+    set_rule(world.get_entrance('Ganons Tower Moldorm Door', player),
+             lambda state: state.has_key('Small Key (Ganons Tower)', player, 4))
+    set_rule(world.get_entrance('Ganons Tower Moldorm Gap', player),
+             lambda state: state.has('Hookshot', player) and state.world.get_entrance('Ganons Tower Moldorm Gap', player).parent_region.dungeon.bosses['top'].can_defeat(state))
     set_defeat_dungeon_boss_rule(world.get_location('Agahnim 2', player))
     ganon = world.get_location('Ganon', player)
     set_rule(ganon, GanonDefeatRuleGenerator(player, world.logic[player] in {"owglitches", "minorglitches", "none"},
