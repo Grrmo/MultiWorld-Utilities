@@ -4,7 +4,7 @@ import OverworldGlitchRules
 from BaseClasses import RegionType, World, Entrance
 from Items import ItemFactory, progression_items, item_name_groups
 from OverworldGlitchRules import overworld_glitches_rules, no_logic_rules
-from Bosses import GanonDefeatRuleGenerator
+from Bosses import GanonDefeatRule
 
 
 def set_rules(world, player):
@@ -414,8 +414,7 @@ def global_rules(world, player):
              lambda state: state.has('Hookshot', player) and state.world.get_entrance('Ganons Tower Moldorm Gap', player).parent_region.dungeon.bosses['top'].can_defeat(state))
     set_defeat_dungeon_boss_rule(world.get_location('Agahnim 2', player))
     ganon = world.get_location('Ganon', player)
-    set_rule(ganon, GanonDefeatRuleGenerator(player, world.logic[player] in {"owglitches", "minorglitches", "none"},
-                                             world.swords[player] == "swordless"))
+    set_rule(ganon, lambda state: GanonDefeatRule(state, player))
     if world.goal[player] in ['ganontriforcehunt', 'localganontriforcehunt']:
         add_rule(ganon, lambda state: state.has_triforce_pieces(world.treasure_hunt_count[player], player))
     else:

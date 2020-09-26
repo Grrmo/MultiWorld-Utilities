@@ -116,21 +116,23 @@ def AgahnimDefeatRule(state, player: int):
     return state.has_sword(player) or state.has('Hammer', player) or state.has('Bug Catching Net', player)
 
 
-def GanonDefeatRuleGenerator(player: int, silverless: bool = False, swordless: bool = False):
-    if swordless:
-        return lambda state: state.has('Hammer', player) and \
-                             state.has_fire_source(player) and \
-                             state.has('Silver Bow', player) and \
-                             state.can_shoot_arrows(player)
-    common = lambda state: state.has_beam_sword(player) and state.has_fire_source(player)
+def GanonDefeatRule(state, player: int):
+    if state.world.swords[player] == "swordless":
+        return state.has('Hammer', player) and \
+               state.has_fire_source(player) and \
+               state.has('Silver Bow', player) and \
+               state.can_shoot_arrows(player)
 
-    if silverless:  # silverless ganon may be needed in minor glitches
-        return lambda state: common and state.has('Tempered Sword', player) or state.has('Golden Sword', player) or (
+    common = state.has_beam_sword(player) and state.has_fire_source(player)
+    # silverless ganon may be needed in minor glitches
+    if state.world.logic[player] in {"owglitches", "minorglitches", "none"}:
+        # need to light torch a sufficient amount of times
+        return common and state.has('Tempered Sword', player) or state.has('Golden Sword', player) or (
                 state.has('Silver Bow', player) and state.can_shoot_arrows(player)) or \
-                             state.has('Lamp', player) or state.can_extend_magic(player, 12)
-                # need to light torch a sufficient amount of times
+               state.has('Lamp', player) or state.can_extend_magic(player, 12)
+
     else:
-        return lambda state: common and state.has('Silver Bow', player) and state.can_shoot_arrows(player)
+        return common and state.has('Silver Bow', player) and state.can_shoot_arrows(player)
 
 
 boss_table = {
