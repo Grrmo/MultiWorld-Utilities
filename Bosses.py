@@ -129,9 +129,9 @@ def GanonDefeatRule(state, player: int):
     # silverless ganon may be needed in minor glitches
     if state.world.logic[player] in {"owglitches", "minorglitches", "none"}:
         # need to light torch a sufficient amount of times
-        return common and state.has('Tempered Sword', player) or state.has('Golden Sword', player) or (
-                state.has('Silver Bow', player) and state.can_shoot_arrows(player)) or \
-               state.has('Lamp', player) or state.can_extend_magic(player, 12)
+        return common and (state.has('Tempered Sword', player) or state.has('Golden Sword', player) or (
+                state.has('Silver Bow', player) and state.can_shoot_arrows(player)) or
+               state.has('Lamp', player) or state.can_extend_magic(player, 12))
 
     else:
         return common and state.has('Silver Bow', player) and state.can_shoot_arrows(player)
