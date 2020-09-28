@@ -29,6 +29,9 @@ dark_room_logic: # Logic for unlit dark rooms
   lamp: 50 # require the Lamp for these rooms to be considered accessible.
   sconces: 0 # in addition to lamp, allow the fire rod and presence of easily accessible sconces for access
   none: 0 # all dark rooms are always considered doable, meaning this may force completion of rooms in complete darkness
+restrict_dungeon_item_on_boss: # aka ambrosia boss items
+  on: 0 # prevents unshuffled compasses, maps and keys to be boss drops, they can still drop keysanity and other players' items
+  off: 50
 meta_ignore: # Nullify options specified in the meta.yaml file. Adding an option here guarantees it will not occur in your seed, even if the .yaml file specifies it
   mode:
     - inverted # Never play inverted seeds
@@ -298,8 +301,8 @@ rom:
     on: 0
     off: 50
   quickswap: # Enable switching items by pressing the L+R shoulder buttons
-    on: 0
-    off: 50
+    on: 50
+    off: 0
   menuspeed: # Controls how fast the item menu opens and closes
     normal: 50
     instant: 0

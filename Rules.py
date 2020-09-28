@@ -20,7 +20,8 @@ def set_rules(world, player):
                 exit.hide_path = True
             return
         else:
-            # Set access rules according to max glitches for multiworld progression.  Set accessibility to none, and shuffle assuming the no logic players can always win
+            # Set access rules according to max glitches for multiworld progression.
+            # Set accessibility to none, and shuffle assuming the no logic players can always win
             world.accessibility[player] = 'none'
             world.progression_balancing[player] = False
 
@@ -142,9 +143,14 @@ def forbid_item(location, item, player: int):
     location.item_rule = lambda i: (i.name != item or i.player != player) and old_rule(i)
 
 
-def forbid_items(location, items: set, player: int):
+def forbid_items_for_player(location, items: set, player: int):
     old_rule = location.item_rule
     location.item_rule = lambda i: (i.player != player or i.name not in items) and old_rule(i)
+
+def forbid_items(location, items: set):
+    """unused, but kept as a debugging tool."""
+    old_rule = location.item_rule
+    location.item_rule = lambda i: i.name not in items and old_rule(i)
 
 
 def add_item_rule(location, rule):
@@ -172,7 +178,7 @@ def locality_rules(world, player):
     if world.local_items[player]:
         for location in world.get_locations():
             if location.player != player:
-                forbid_items(location, world.local_items[player], player)
+                forbid_items_for_player(location, world.local_items[player], player)
 
 
 non_crossover_items = (item_name_groups["Small Keys"] | item_name_groups["Big Keys"] | progression_items) - {

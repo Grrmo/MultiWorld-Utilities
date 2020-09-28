@@ -21,6 +21,7 @@ class World(object):
     difficulty_requirements: dict
     required_medallions: dict
     dark_room_logic: Dict[int, str]
+    restrict_dungeon_item_on_boss: Dict[int, bool]
 
     def __init__(self, players: int, shuffle, logic, mode, swords, difficulty, difficulty_adjustments, timer,
                  progressive,
@@ -127,6 +128,7 @@ class World(object):
             set_player_attr('shop_shuffle', 'off')
             set_player_attr('shuffle_prizes', "g")
             set_player_attr('dark_room_logic', "lamp")
+            set_player_attr('restrict_dungeon_item_on_boss', False)
 
     def secure(self):
         self.random = secrets.SystemRandom()
@@ -357,6 +359,9 @@ class World(object):
             return [location for location in self.get_locations() if
                     location.player == player and not location.item]
         return [location for location in self.get_locations() if not location.item]
+
+    def get_unfilled_dungeon_locations(self):
+        return [location for location in self.get_locations() if not location.item and location.parent_region.dungeon]
 
     def get_filled_locations(self, player=None) -> list:
         if player is not None:
@@ -1301,7 +1306,8 @@ class Spoiler(object):
                          'triforce_pieces_available': self.world.triforce_pieces_available,
                          'triforce_pieces_required': self.world.triforce_pieces_required,
                          'shop_shuffle': self.world.shop_shuffle,
-                         'shuffle_prizes': self.world.shuffle_prizes
+                         'shuffle_prizes': self.world.shuffle_prizes,
+                         'restrict_dungeon_item_on_boss': self.world.restrict_dungeon_item_on_boss
                          }
 
     def to_json(self):
@@ -1346,6 +1352,8 @@ class Spoiler(object):
                         self.hashes[player, team]))
                 outfile.write('Logic:                           %s\n' % self.metadata['logic'][player])
                 outfile.write('Dark Room Logic:                 %s\n' % self.metadata['dark_room_logic'][player])
+                outfile.write('Restricted Boss Drops:           %s\n' %
+                              bool_to_text(self.metadata['restrict_dungeon_item_on_boss'][player]))
                 if self.world.players > 1:
                     outfile.write('Progression Balanced:            %s\n' % (
                         'Yes' if self.metadata['progression_balancing'][player] else 'No'))
