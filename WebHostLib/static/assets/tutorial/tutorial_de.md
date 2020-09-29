@@ -8,9 +8,9 @@
 
 ## Benötigte Software
 - [MultiWorld Utilities](https://github.com/Berserker66/MultiWorld-Utilities/releases)
-- [QUsb2Snes](https://github.com/Skarsnik/QUsb2snes/releases) (Included in the above Utilities)
+- [QUsb2Snes](https://github.com/Skarsnik/QUsb2snes/releases) (In den Multiworld Utilities bereits inbegriffen)
 - Hardware oder Software zum Laden und Abspielen von SNES Rom-Dateien
-    - Einen Emulator, der lua-scripts abspielen kann
+    - Einen Emulator, der lua-scripts unterstützt
       ([snes9x Multitroid](https://drive.google.com/drive/folders/1_ej-pwWtCAHYXIrvs5Hro16A1s9Hi3Jz),
       [BizHawk](http://tasvideos.org/BizHawk.html))
     - Ein SD2SNES, [FXPak Pro](https://krikzz.com/store/home/54-fxpak-pro.html), oder andere kompatible Hardware
@@ -21,20 +21,20 @@
 ### Windows
 1. Lade die Multiworld Utilities herunter und führe die Installation aus. Sei sicher, dass du immer die
 aktuellste Version installiert hast.**Die Datei befindet sich im "assets"-Kasten unter der jeweiligen Versionsinfo!**.
-Für normale Multiworld-Spiele lädst du die `Setup.BerserkerMultiworld.exe` herunter.
-    - Für den Doorrandomizer muss die alternative doors-Variante geladen werden. 
+Für Multiworld-Spiele ohne Doors Logik lädst du die `Setup.BerserkerMultiworld.exe` herunter.
+    - Für den Door-Randomizer muss die alternative doors-Variante geladen werden. 
     - Während der Installation fragt dich das Programm nach der japanischen 1.0 ROM-Datei. Wenn du die Software	
-      bereits installiert hast und einfach nur updaten willst, wirst du nicht nochmal danach gefragt.
-    - Es kann auch sein,dass der Installer Microsoft Visual C++ installieren möchte.
+      bereits installiert hast, wird bei einem Update nicht noch einmal danach gefragt.
+    - Es kann auch sein, dass der Installer Microsoft Visual C++ 2019 installieren möchte.
       Wenn du das bereits installiert hast (durch Steam oder andere Programme), wirst du nicht nochmal danach gefragt.
 
-2. Wenn du einen Emulator benutzt, so ist es sinnvoll, ihn als Standard zum Abspielen für .sfc-dateien einzustellen.
-    1. Entpacke oder Installiere deinen Emulator(-Ordner) an einen Ort, den du auch wiederfindest
+2. Wenn du einen Emulator benutzt, ist es sinnvoll, ihn als Standardprogramm zum Öffnen von .sfc-dateien einzustellen.
+    1. Entpacke oder Installiere deinen Emulator(-Ordner) an einen Ort, den du auch wiederfindest.
     2. Rechtsklicke auf eine .sfc-Datei und wähle **Öffnen mit...**
     3. Mache einen Haken in die Box bei **Immer diese App zum Öffnen von .sfc Dateien benutzen **.
     4. Scrolle zum Ende und wähle **Weitere Apps** und nochmal am Ende **Andere App auf diesem PC suchen** auswählen.
     5. Suche nach der .exe-Datei des Emulators deiner Wahl und wähle **Öffnen**.
-       Diese Datei befindet sich dort, wo den Emulator in Schritt 1 enpackt/installiert hast.
+       Diese Datei befindet sich dort, wo du den Emulator in Schritt 1 enpackt/installiert hast.
 
 ### Macintosh 
 - Es werden freiwillige Helfer gesucht! Meldet euch doch bei **Farrak Kilhn** auf Discord, wenn ihr helfen wollt!
@@ -42,27 +42,27 @@ Für normale Multiworld-Spiele lädst du die `Setup.BerserkerMultiworld.exe` her
 ## Erstellen deiner YAML-Datei
 
 ### Was ist eine YAML-Datei und wofür brauche ich die?
-Deine persönliche YAML-Datei beinhaltet eine Reihe von Einstellungen, die der Zufallsgenerator zum erstellen
-von deinem Spiel benötigt. Jeder Spieler einer Multiworld stellt seine eigene YAML-Datei zur Verfügung. Dadurch kann
+Deine persönliche YAML-Datei enthält eine Reihe von Einstellungen, die der Zufallsgenerator zum Erstellen
+deines Spiels benötigt. Jeder Spieler einer Multiworld stellt seine eigene YAML-Datei zur Verfügung. Dadurch kann
 jeder Spieler sein Spiel nach seinem eigenen Geschmack gestalten, während andere Spieler unabhängig davon ihre eigenen
 Einstellungen wählen können!
 
-### Wo bekomme ich so eine YAML-Datei her?
-Die [Player Settings](/player-settings) Seite auf der Website ermöglicht das einfache Erstellen  und Herunterladen
+### Woher bekomme ich so eine YAML-Datei?
+Die [Player Settings](/player-settings) Seite auf der Website ermöglicht das einfache Erstellen und Herunterladen
 deiner eigenen `yaml` Datei. Drei verschiedene Voreinstellungen können dort gespeichert werden.
 
 ### Deine YAML-Datei ist gewichtet!
-Die **Player Settings** Seite hat eine Menge Optionen, die man per Schieber einstellen kann. Das ermöglicht es,
-verschiedene Optionen mit unterschiedlichen Wahrscheinlichkeiten in einer Kategorie ausgewürfelt zu werden 
+Die **Player Settings** Seite hat eine Menge Optionen, die man per Schieber einstellen kann. So können
+verschiedene Optionen mit unterschiedlichen Wahrscheinlichkeiten in einer Kategorie ausgewürfelt werden.
 
-Als Beispiel kann man sie die Option "Map Shuffle" als einen Eimer mit Zetteln zur Abstimmung Vorstellen.
-So kann man beispielsweise für die Option "On" 20 Zettel mit dieser Option einwerfen und 40 Zettel mit "Off".
+Zum Beispiel kann man sich die Einstellung "Map Shuffle" als einen Eimer mit Zetteln zur Abstimmung Vorstellen.
+Man könnte nun für die Option "On" 20 Zettel einwerfen und 40 Zettel mit "Off".
 
-Entsprechend in diesem Beispiel liegen dann 60 Zettel im Eimer. 20 für "On" und 40 für "Off". Um die Option
+Entsprechend diesem Beispiel liegen dann 60 Zettel im Eimer. 20 für "On" und 40 für "Off". Um die Einstellung
 festzulegen, "greift" der Generator in den Eimer und holt sich zufällig einen Zettel heraus. Entsprechend ist die
-Wahrscheinlichkeit für "Off" bei einem Map Shuffle höher, als "O"
+Wahrscheinlichkeit für "Off" bei einem Map Shuffle höher, als "On"
 
-Wenn du eine Option nicht gewählt haben möchtest, setze ihren Wert einfach auf Null.
+Wenn du eine Option nicht gewählt haben möchtest, setze ihren Wert einfach auf 0 (Null).
 (Es muss aber mindestens eine Option pro Kategorie einen Wert größer Null besitzen, sonst funktioniert es nicht!)
 
 ### Überprüfung deiner YAML-Datei
@@ -73,7 +73,7 @@ bei der [YAML Validator](/mysterycheck) Seite tun.
 1. Navigiere zur [Generator Seite](/generate) und lade dort deine YAML-Datei hoch.
 2. Dir wird eine "Seed Info"-Seite  angezeigt, wo du deine Patch-Datei herunterladen kannst.
 3. Doppelklicke die Patchdatei und der Emulator sollte nach kurzer Verzögerung mit dem gepatchten Rom starten.
-   Der Client ist soweit unnötig für Einzelspielerspiele, also kannst diesen und das WebUI einfach schließen.
+   Der Multiworld Client wird für Einzelspielerspiele nicht gebraucht, also kannst du diesen und das WebUI einfach schließen.
 
 ## Einem MultiWorld-Spiel beitreten
 
@@ -134,21 +134,21 @@ Manchmal ist dies nicht der Fall, auch wenn das Spiel auf der Webseite gehostet 
 Wenn die WebUI vom Client "Server Status: Not Connected" zeigt, frag deinen Host nach der passenden Adresse
 und trage sie einfach in das Textfeld neben "Server" ein und drücke Enter.
 
-Der Client wird versuchen auf die neue Adresse zu verbinden und nach einer Weile "Server Status: Connected" zeigen.
+Der Client wird versuchen, auf die neue Adresse zu verbinden und nach einer Weile "Server Status: Connected" zeigen.
 Sollte nach einer Weile der Client sich nicht verbunden haben, lade die Seite neu.
 
 ### Spiele das Spiel!
-Wenn der Client anzeigt, dass sowohl das SNES-Gerät (oder Emulator) und der Server verbunden sind,
+Wenn der Client anzeigt, dass sowohl das SNES-Gerät (bzw. der Emulator) als auch der Server verbunden sind,
 können du und deine Freunde loslegen! Glückwunsch zum erfolgreichen Beitritt zu einem Multiworld-Spiel ;)
 
 ## Ein Multiworld-Spiel hosten
 Die Empfohlene Art, ein Spiel zu hosten, ist, den Service auf
 [der website](https://berserkermulti.world/generate) zu nutzen. Das Ganze ist recht einfach:
 
-1. Lasse dir von deinen Mitspielern die YAML-Datei zuschicken.
-2. Erstelle einen Zip-komprimierten Ordner´, in den du alle YAML-Dateien deiner Spieler einfügst.
+1. Lass dir von deinen Mitspielern die YAML-Datei zuschicken.
+2. Erstelle einen Zip-komprimierten Ordner, in den du alle YAML-Dateien deiner Spieler einfügst.
 3. Lade diesen Zip-Ordner auf der oben genannten Website hoch.
-4. Warte einen Moment, wenn das Spiel erstellt wird.
+4. Warte einen Moment, während das Spiel erstellt wird.
 5. Wenn das Spiel erstellt wurde, wirst du auf eine "Seed Info"-Seite weitergeleitet.
 6. Klicke auf "Create New Room". Du wirst auf die Serverseite gebracht. Gib diesen Link deinen Mitspielern, 
    sodass sie ihre Patch-Dateien von dort herunterladen können.
