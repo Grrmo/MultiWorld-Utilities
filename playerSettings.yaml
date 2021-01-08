@@ -21,8 +21,8 @@ description: Template Name # Used to describe your yaml. Useful if you have mult
 name: YourName # Your name in-game. Spaces will be replaced with underscores and there is a 16 character limit
 glitches_required: # Determine the logic required to complete the seed
   none: 50 # No glitches required
-  minor_glitches: 0 # Puts fake flipper, waterwalk, super bunny shenanigans, and etc into logic
-  overworld_glitches: 0 # Assumes the player has knowledge of both overworld major glitches (boots clips, mirror clips) and minor glitches (fake flipper, super bunny shenanigans, water walk and etc.)
+  minor_glitches: 0 # See http://alttp.mymm1.com/wiki/Minor_Glitch for a list of glitches put in logic
+  overworld_glitches: 0 # All minor glitches plus wall clips, Death Mountain ascent/descent, GT clip, mirror clips, etc
   no_logic: 0 # Your own items are placed with no regard to any logic; such as your Fire Rod can be on your Trinexx.
   # Other players items are placed into your world under OWG logic
 meta_ignore: # Nullify options specified in the meta.yaml file. Adding an option here guarantees it will not occur in your seed, even if the .yaml file specifies it
@@ -48,13 +48,14 @@ bigkey_shuffle: # Shuffle big keys into the world and other dungeons, including 
 local_keys: # Keep small keys and big keys local to your world
   on: 0
   off: 50
-dungeon_items: # Alternative to the 4 shuffles and local_keys above this, does nothing until the respective 4 shuffles and local_keys above are deleted
-  mc: 0 # Shuffle maps and compasses
+dungeon_items: # Alternative to the 4 shuffles and local_keys above this, does nothing until the respective 5 options above are deleted
+  # b = big keys, c = compasses, l = local, m = maps, s = small keys, u = universal small keys
   none: 50 # Shuffle none of the 4
+  mc: 0 # Shuffle maps and compasses
   mcsb: 0 # Shuffle all of the 4, any combination of m, c, s and b will shuffle the respective item, or not if it's missing, so you can add more options here
   lmcsb: 0 # Like mcsb above, but with keys kept local to your world. l is what makes your keys local, or not if it's missing
   ub: 0 # universal small keys and shuffled big keys
-  # you can add more combos of these letters here
+  # you can add any combo of these letters here
 dungeon_counters:
   on: 0 # Always display amount of items checked in a dungeon
   pickup: 50 # Show when compass is picked up
@@ -64,12 +65,12 @@ accessibility:
   items: 0 # Guarantees you will be able to acquire all items, but you may not be able to access all locations
   locations: 50 # Guarantees you will be able to access all locations, and therefore all items
   none: 0 # Guarantees only that the game is beatable. You may not be able to access all locations or acquire all items
-progressive: # Enable or disable progressive items (swords, shields, bow)
+progressive: # Enable or disable progressive items (swords, armor, shields, bows and gloves)
   on: 50 # All items are progressive
   off: 0 # No items are progressive
-  random: 0 # Randomly decides for all items. Swords could be progressive, shields might not be
+  random: 0 # Randomly decides for each of the items listed above
 entrance_shuffle: # Documentation: https://alttpr.com/en/options#entrance_shuffle
-  none: 50 # Vanilla game map. All entrances and exits lead to their original locations. You probably want this option
+  none: 50 # Vanilla game map. All entrances and exits lead to their original locations
   dungeonssimple: 0 # Shuffle just dungeons amongst each other, swapping dungeons entirely, so Hyrule Castle is always 1 dungeon
   dungeonsfull: 0 # Shuffle any dungeon entrance with any dungeon interior, so Hyrule Castle can be 4 different dungeons
   simple: 0 # Entrances are grouped together before being randomized. Simple uses the most strict grouping rules
@@ -78,37 +79,40 @@ entrance_shuffle: # Documentation: https://alttpr.com/en/options#entrance_shuffl
   crossed: 0 # Less strict than full
   insanity: 0 # Very few grouping rules. Good luck
 goals:
-  ganon: 50 # Climb GT, defeat Agahnim 2, and then kill Ganon
-  fast_ganon: 0 # Only killing Ganon is required. The hole is always open. However, items may still be placed in GT
+  ganon: 50 # Climb GT, defeat Agahnim 2 and then kill Ganon
+  fast_ganon: 0 # Only killing Ganon is required. The pyramid hole is already open. However, items may still be placed in GT
   dungeons: 0 # Defeat the boss of all dungeons, including Agahnim's tower and GT (Aga 2)
   pedestal: 0 # Pull the Triforce from the Master Sword pedestal
-  triforce_hunt: 0 # Collect 20 of 30 Triforce pieces spread throughout the worlds, then turn them in to Murahadala in front of Hyrule Castle
-  local_triforce_hunt: 0 # Collect 20 of 30 Triforce pieces spread throughout your world, then turn them in to Murahadala in front of Hyrule Castle
-  ganon_triforce_hunt: 0 # Collect 20 of 30 Triforce pieces spread throughout the worlds, then kill Ganon
+  triforce_hunt: 0 # Collect 20 out of 30 Triforce pieces spread throughout the worlds, then turn them in to Murahadala in front of Hyrule Castle
+  local_triforce_hunt: 0 # Collect 20 out of 30 Triforce pieces spread throughout your world, then turn them in to Murahadala in front of Hyrule Castle
+  ganon_triforce_hunt: 0 # Collect 20 out of 30 Triforce pieces spread throughout the worlds, then kill Ganon
   local_ganon_triforce_hunt: 0 # Collect 20 of 30 Triforce pieces spread throughout your world, then kill Ganon
-triforce_pieces_mode: #Determine how to calculate the extra available triforce pieces.
-  extra: 0 # available = triforce_pieces_extra + triforce_pieces_required
-  percentage: 0 # available = (triforce_pieces_percentage /100) * triforce_pieces_required
+triforce_pieces_mode: # Determine how to calculate the amount of triforce placed for you
+  # A maximum of 90 Triforce pieces can be placed and the game will always make sure you can get at least as many as required
+  extra: 0 # Add a fixed number of additional Triforce pieces to the amount of the required ones
+  percentage: 0 # Set the available Triforce pieces to a percentage amount of the required ones
   available: 50 # available = triforce_pieces_available
-triforce_pieces_extra: # Set to how many extra triforces pieces are available to collect in the world. 
+triforce_pieces_extra: # Set to how many extra Triforce pieces are available to collect in the Multiworld.
   # Format "pieces: chance"
   0: 0
   5: 50
   10: 50
   15: 0
   20: 0
-triforce_pieces_percentage: # Set to how many extra triforces pieces according to a percentage of the required ones, are available to collect in the world. 
+triforce_pieces_percentage: # Sets the amount of available Triforce Pieces to a percentage amount of the required ones
   # Format "pieces: chance"
-  100: 0 #No extra
-  150: 50 #Half the required will be added as extra
-  200: 0 #There are the double of the required ones available.
+  100: 0 # No extra
+  125: 0 # 25% more Triforce pieces will be placed in the game
+  150: 50 # 50% more Triforce pieces will be placed in the game
+  175: 0 # 75% more Triforce pieces will be placed in the game
+  200: 0 # There are the double of the required ones available.
 triforce_pieces_available: # Set to how many triforces pieces are available to collect in the world. Default is 30. Max is 90, Min is 1
   # Format "pieces: chance"
   25: 0
   30: 50
   40: 0
   50: 0
-triforce_pieces_required: # Set to how many out of X triforce pieces you need to win the game in a triforce hunt. Default is 20. Max is 90, Min is 1
+triforce_pieces_required: # Set to how many out of X triforce pieces you need to win the game in a Triforce hunt. Default is 20. Max is 90, Min is 1
   # Format "pieces: chance"
   15: 0
   20: 50
@@ -124,7 +128,7 @@ tower_open: # Crystals required to open GT
   '5': 30
   '6': 20
   '7': 10
-  random: 0
+  random: 0 # If this option triggers, it will be any out of 0 to 7
 ganon_open: # Crystals required to hurt Ganon
   '0': 80
   '1': 70
@@ -134,9 +138,9 @@ ganon_open: # Crystals required to hurt Ganon
   '5': 30
   '6': 20
   '7': 10
-  random: 0
+  random: 0 # If this option triggers, it will be any out of 0 to 7
 mode:
-  standard: 50 # Begin the game by rescuing Zelda from her cell and escorting her to the Sanctuary
+  standard: 50 # Begin the game by rescuing princess Zelda from her cell and escorting her to the Sanctuary
   open: 50 # Begin the game from your choice of Link's House or the Sanctuary
   inverted: 0 # Begin in the Dark World. The Moon Pearl is required to avoid bunny-state in Light World, and the Light World game map is altered
 retro:
@@ -148,39 +152,39 @@ hints:
 weapons: # Specifically, swords
   randomized: 0 # Swords are placed randomly throughout the world
   assured: 50 # Begin with a sword, the rest are placed randomly throughout the world
-  vanilla: 0 # Swords are placed in vanilla locations in your own game (Uncle, Pyramid Fairy, Smiths, Pedestal)
-  swordless: 0 # Your swords are replaced by rupees. Gameplay changes have been made to accommodate this change
+  vanilla: 0 # Swords are placed in vanilla locations in your own game (uncle, pyramid fairy, blacksmiths, pedestal)
+  swordless: 0 # Your swords are replaced by rupees. Hammer hurts Ganon, bugnet repels Aghanims' bolts, swordless medallion use in certain locations and tablets need Hammer
 item_pool:
-  easy: 0 # Doubled upgrades, progressives, and etc
+  easy: 0 # Doubled upgrades, progressives, 3 lamps and 8 bottles are put into the world
   normal: 50 # Item availability remains unchanged from vanilla game
   hard: 0 # Reduced upgrade availability (max: 14 hearts, blue mail, tempered sword, fire shield, no silvers unless swordless)
   expert: 0 # Minimum upgrade availability (max: 8 hearts, green mail, master sword, fighter shield, no silvers unless swordless)
   crowd_control: 0 # Sets up the item pool for the crowd control extension. Do not use it without crowd control
 item_functionality:
-  easy: 0 # Allow Hammer to damage ganon, Allow Hammer tablet collection, Allow swordless medallion use everywhere.
+  easy: 0 # Allow Hammer to damage ganon, Allow Hammer tablet collection, Allow swordless medallion use everywhere
   normal: 50 # Vanilla item functionality
   hard: 0 # Reduced helpfulness of items (potions less effective, can't catch faeries, cape uses double magic, byrna does not grant invulnerability, boomerangs do not stun, silvers disabled outside ganon)
   expert: 0 # Vastly reduces the helpfulness of items (potions barely effective, can't catch faeries, cape uses double magic, byrna does not grant invulnerability, boomerangs and hookshot do not stun, silvers disabled outside ganon)
 progression_balancing:
-  on: 50 # A system to reduce BK, as in times during which you can't do anything by moving your items into an earlier access sphere to make it likely you have stuff to do
-  off: 0 # Turn this off if you don't mind a longer multiworld, or can glitch around missing items.
-### Enemizer Section ###
+  on: 50 # A system to reduce idle times by moving your items into an earlier access sphere to make it likely you have things to do
+  off: 0 # Turn this off if you don't mind a longer multiworld, or if you can glitch around missing items
+### Enemizer section ###
 boss_shuffle:
   none: 50 # Vanilla bosses
   simple: 0 # Existing bosses except Ganon and Agahnim are shuffled throughout dungeons
   full: 0 # 3 bosses can occur twice
   random: 0 # Any boss can appear any amount of times
-  singularity: 0 # Picks a boss, tries to put it everywhere that works, if there's spaces remaining it picks a boss to fill those
-enemy_shuffle: # Randomize enemy placement
+  singularity: 0 # Picks a boss, tries to put it everywhere it can spawn and if there are locations remaining, it picks one boss that can fill those
+enemy_shuffle: # Randomize enemy placement. Be aware that this option can change gameplay (kill-all rooms that require certain items in dungeons or you might need Byrna or cape to bypass spike rollers)
   on: 0
   off: 50
-killable_thieves: # Make thieves killable
-  on: 0 # Usually turned on together with enemy_shuffle to make annoying thief placement more manageable
+killable_thieves: # Make thieves killable. Usually turned on together with enemy_shuffle to make annoying thief placement more manageable
+  on: 0
   off: 50
 tile_shuffle: # Randomize the tile layouts in flying tile rooms
   on: 0
   off: 50
-bush_shuffle: # Randomize the chance that bushes have enemies and the enemies under said bush
+bush_shuffle: # Randomize the chance of encountering enemies under bushes and also the creature placed under said bush
   on: 0
   off: 50
 enemy_damage:
@@ -195,7 +199,7 @@ enemy_health:
 pot_shuffle:
   'on': 0 # Keys, items, and buttons hidden under pots in dungeons are shuffled with other pots in their supertile
   'off': 50 # Default pot item locations
-### End of Enemizer Section ###
+### End of Enemizer section ###
 beemizer: # Remove items from the global item pool and replace them with single bees and bee traps
   0: 50 # No bee traps are placed
   1: 0 # 25% of the non-essential item pool is replaced with bee traps
@@ -206,10 +210,10 @@ shop_shuffle:
   none: 50
   i: 0 # Shuffle the inventories of the shops around
   p: 0 # Randomize the prices of the items in shop inventories
-  u: 0 # Shuffle capacity upgrades into the item pool (and allow them to traverse the multiworld)
+  u: 0 # Shuffle arrow and bomb capacity upgrades into the item pool (and allow them to traverse the multiworld)
   ip: 0 # Shuffle inventories and randomize prices
   uip: 0 # Shuffle inventories, randomize prices and shuffle capacity upgrades into the item pool
-  # You can add more combos
+  # You can add any combo you like
 shuffle_prizes: # aka drops
   none: 0 # do not shuffle prize packs
   g: 50 # shuffle "general" price packs, as in enemy, tree pull, dig etc.
@@ -222,12 +226,12 @@ timer:
   ohko: 0 # Timer always at zero. Permanent OHKO.
   timed_countdown: 0 # Starts the clock with forty minutes. Same clocks as timed mode, but if the clock hits zero you lose. You can still keep playing, though.
   display: 0 # Displays a timer, but otherwise does not affect gameplay or the item pool.
-# Can be uncommented to use it
+# Can be uncommented to use it but make sure that there is no whitespace before the option iteself
 # local_items: # Force certain items to appear in your world only, not across the multiworld. Recognizes some group names, like "Swords"
 #  - "Moon Pearl"
 #  - "Small Keys"
 #  - "Big Keys"
-# Can be uncommented to use it
+# Can be uncommented to use it but make sure that there is no whitespace before the option iteself
 # startinventory: # Begin the file with the listed items/upgrades
   # Pegasus Boots: on
   # Bomb Upgrade (+10): 4
@@ -235,7 +239,7 @@ timer:
 glitch_boots:
   on: 50 # Start with Pegasus Boots in any glitched logic mode that makes use of them
   off: 0
-linked_options:
+linked_options: # If you want your Multiworld to randomly roll any out of several specified modes, use linked options
   - name: crosskeys
     options: # These overwrite earlier options if the percentage chance triggers
       entrance_shuffle: crossed
@@ -251,7 +255,7 @@ linked_options:
       compass_shuffle: true
       map_shuffle: true
       smallkey_shuffle: true
-      local_items: # Forces keys to be local to your own world
+      local_items: # Forces key to be local to your own world
         - "Small Keys"
         - "Big Keys"
     percentage: 0 # Set this to the percentage chance you want local crosskeys
@@ -318,8 +322,8 @@ rom:
   ow_palettes: # Change the colors of the overworld
     default: 50 # No changes
     random: 0 # Shuffle the colors
-    blackout: 0 # Never use this
+    blackout: 0 # The screen is all black. You might not want this
   uw_palettes: # Change the colors of caves and dungeons
     default: 50 # No changes
     random: 0 # Shuffle the colors
-    blackout: 0 # Never use this
+    blackout: 0 # The screen is all black. You might not want this
